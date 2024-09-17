@@ -1,0 +1,25 @@
+{
+  "name": "vscode-ausar",
+  "displayName": "vscode-ausar",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "ausar",
+      "aliases": ["ausar", "ausar"],
+      "extensions": ["ausar"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "ausar",
+      "scopeName": "source.ausar",
+      "path": "./syntaxes/ausar.tmLanguage.json"
+    }]
+  }
+}

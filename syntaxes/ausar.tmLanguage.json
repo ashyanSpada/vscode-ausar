@@ -1,0 +1,51 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "ausar",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#operators"
+		},
+		{
+			"include": "#buildins"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.ausar",
+					"match": "\\b(else|for|func|if|import|package|range|return|formula)\\b"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.ausar",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.ausar",
+					"match": "\\\\."
+				}
+			]
+		},
+		"numbers": {
+			"name": "constant.numeric.ausar",
+			"match": "-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?"
+		},
+		"buildins": {
+			"name": "constant.language",
+			"match": "\\b(true|false|True|False)\\b"
+		}
+	},
+	"scopeName": "source.ausar"
+}
