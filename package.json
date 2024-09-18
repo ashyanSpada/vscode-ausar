@@ -21,11 +21,11 @@
       {
         "id": "ausar",
         "aliases": [
-          "ausar",
-          "ausar"
+          "aus"
         ],
         "extensions": [
-          "ausar"
+          "ausar",
+          "aus"
         ],
         "configuration": "./language-configuration.json"
       }
