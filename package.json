@@ -4,6 +4,12 @@
   "description": "the extension for ausar",
   "repository": "https://github.com/ashyanSpada/vscode-ausar",
   "version": "0.0.1",
+  "license": "Apache-2.0",
+  "author": "Ausar <ashyan_spada@outlook.com>",
+  "publisher": "AshyanSpada",
+  "maintainers": [
+    "Ausar <ashyan_spada@outlook.com>"
+  ],
   "engines": {
     "vscode": "^1.93.0"
   },
