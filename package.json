@@ -1,7 +1,8 @@
 {
   "name": "vscode-ausar",
   "displayName": "vscode-ausar",
-  "description": "",
+  "description": "the extension for ausar",
+  "repository": "https://github.com/ashyanSpada/vscode-ausar",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.93.0"
@@ -10,16 +11,25 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "ausar",
-      "aliases": ["ausar", "ausar"],
-      "extensions": ["ausar"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "ausar",
-      "scopeName": "source.ausar",
-      "path": "./syntaxes/ausar.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "ausar",
+        "aliases": [
+          "ausar",
+          "ausar"
+        ],
+        "extensions": [
+          "ausar"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ausar",
+        "scopeName": "source.ausar",
+        "path": "./syntaxes/ausar.tmLanguage.json"
+      }
+    ]
   }
 }
