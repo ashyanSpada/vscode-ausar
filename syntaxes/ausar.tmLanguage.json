@@ -1,51 +1,250 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "ausar",
+	"scopeName": "source.ausar",
 	"patterns": [
 		{
+			"include": "#comments"
+		},
+		{
+			"comment": "Interpreted string literals",
+			"begin": "\"",
+			"end": "\"",
+			"name": "string.quoted.double.ausar",
+			"patterns": [
+				{
+					"include": "#string_escaped_char"
+				},
+				{
+					"include": "#string_placeholder"
+				}
+			]
+		},
+		{
+			"comment": "Raw string literals",
+			"begin": "`",
+			"end": "`",
+			"name": "string.quoted.raw.ausar",
+			"patterns": [
+				{
+					"include": "#string_placeholder"
+				}
+			]
+		},
+		{
+			"comment": "Syntax error receiving channels",
+			"match": "<\\-([\\t ]+)chan\\b",
+			"captures": {
+				"1": {
+					"name": "invalid.illegal.receive-channel.ausar"
+				}
+			}
+		},
+		{
+			"comment": "Syntax error sending channels",
+			"match": "\\bchan([\\t ]+)<-",
+			"captures": {
+				"1": {
+					"name": "invalid.illegal.send-channel.ausar"
+				}
+			}
+		},
+		{
+			"comment": "Syntax error using slices",
+			"match": "\\[\\](\\s+)",
+			"captures": {
+				"1": {
+					"name": "invalid.illegal.slice.ausar"
+				}
+			}
+		},
+		{
+			"comment": "Floating-point literals",
+			"match": "(\\.\\d+([Ee][-+]\\d+)?i?)\\b|\\b\\d+\\.\\d*(([Ee][-+]\\d+)?i?\\b)?",
+			"name": "constant.numeric.floating-point.ausar"
+		},
+		{
+			"comment": "Integers",
+			"match": "\\b((0b[0-9]+)|(0x[0-9a-fA-F]+)|(0[0-7]+i?)|(\\d+([Ee]\\d+)?i?)|(\\d+[Ee][-+]\\d+i?))\\b",
+			"name": "constant.numeric.integer.ausar"
+		},
+		{
+			"comment": "Language constants",
+			"match": "\\b(true|false|nil|iota)\\b",
+			"name": "constant.numeric.language.ausar"
+		},
+		{
+			"comment": "Terminators",
+			"match": ";",
+			"name": "keyword.other.semi.ausar"
+		},
+		{
 			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
-		},
-		{
-			"include": "#numbers"
 		},
 		{
 			"include": "#operators"
 		},
 		{
-			"include": "#buildins"
+			"include": "#runes"
 		}
 	],
 	"repository": {
+		"comments": {
+			"patterns": [
+				{
+					"begin": "/\\*",
+					"end": "\\*/",
+					"name": "comment.block.ausar"
+				},
+				{
+					"begin": "//",
+					"end": "$",
+					"name": "comment.line.double-slash.ausar"
+				}
+			]
+		},
 		"keywords": {
 			"patterns": [
 				{
-					"name": "keyword.control.ausar",
-					"match": "\\b(else|for|func|if|import|package|range|return|formula)\\b"
+					"comment": "Flow control keywords",
+					"match": "\\b(break|case|continue|default|defer|panic|recover|else|fallthrough|for|go|goto|if|range|return|select|switch)\\b",
+					"name": "keyword.control.ausar"
+				},
+				{
+					"match": "\\bchan\\b",
+					"name": "keyword.channel.ausar"
+				},
+				{
+					"match": "\\bconst\\b",
+					"name": "keyword.const.ausar"
+				},
+				{
+					"match": "\\b(func|formula)\\b",
+					"name": "keyword.function.ausar"
+				},
+				{
+					"match": "\\binterface\\b",
+					"name": "keyword.interface.ausar"
+				},
+				{
+					"match": "\\bmap\\b",
+					"name": "keyword.map.ausar"
+				},
+				{
+					"match": "\\bstruct\\b",
+					"name": "keyword.struct.ausar"
+				},
+				{
+					"comment": "Syntax error numeric literals",
+					"match": "\\b0[0-7]*[89]\\d*\\b",
+					"name": "invalid.illegal.numeric.ausar"
+				},
+				{
+					"comment": "Functions",
+					"match": "\\bfunc\\b",
+					"name": "keyword.function.ausar"
+				},
+				{
+					"match": "\\bpackage\\b",
+					"name": "keyword.package.ausar"
+				},
+				{
+					"match": "\\btype\\b",
+					"name": "keyword.type.ausar"
+				},
+				{
+					"match": "\\bimport\\b",
+					"name": "keyword.import.ausar"
+				},
+				{
+					"match": "\\bvar\\b",
+					"name": "keyword.var.ausar"
 				}
 			]
 		},
-		"strings": {
-			"name": "string.quoted.double.ausar",
-			"begin": "\"",
-			"end": "\"",
+		"operators": {
+			"comment": "Note that the order here is very important!",
 			"patterns": [
 				{
-					"name": "constant.character.escape.ausar",
-					"match": "\\\\."
+					"match": "(\\*|&)(?=\\w)",
+					"name": "keyword.operator.address.ausar"
+				},
+				{
+					"match": "<\\-",
+					"name": "keyword.operator.channel.ausar"
+				},
+				{
+					"match": "\\-\\-",
+					"name": "keyword.operator.decrement.ausar"
+				},
+				{
+					"match": "\\+\\+",
+					"name": "keyword.operator.increment.ausar"
+				},
+				{
+					"match": "(==|!=|<=|>=|<(?!<)|>(?!>))",
+					"name": "keyword.operator.comparison.ausar"
+				},
+				{
+					"match": "(&&|\\|\\||!)",
+					"name": "keyword.operator.logical.ausar"
+				},
+				{
+					"match": "(=|\\+=|\\-=|\\|=|\\^=|\\*=|/=|:=|%=|<<=|>>=|&\\^=|&=)",
+					"name": "keyword.operator.assignment.ausar"
+				},
+				{
+					"match": "(\\+|\\-|\\*|/|%)",
+					"name": "keyword.operator.arithmetic.ausar"
+				},
+				{
+					"match": "(&(?!\\^)|\\||\\^|&\\^|<<|>>)",
+					"name": "keyword.operator.arithmetic.bitwise.ausar"
+				},
+				{
+					"match": "\\.\\.\\.",
+					"name": "keyword.operator.ellipsis.ausar"
 				}
 			]
 		},
-		"numbers": {
-			"name": "constant.numeric.ausar",
-			"match": "-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?"
+		"runes": {
+			"patterns": [
+				{
+					"begin": "'",
+					"end": "'",
+					"name": "string.quoted.rune.ausar",
+					"patterns": [
+						{
+							"match": "\\G(\\\\([0-7]{3}|[abfnrtv\\\\'\"]|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})|.)(?=')",
+							"name": "constant.other.rune.ausar"
+						},
+						{
+							"match": "[^']+",
+							"name": "invalid.illegal.unknown-rune.ausar"
+						}
+					]
+				}
+			]
 		},
-		"buildins": {
-			"name": "constant.language",
-			"match": "\\b(true|false|True|False)\\b"
+		"string_escaped_char": {
+			"patterns": [
+				{
+					"match": "\\\\([0-7]{3}|[abfnrtv\\\\'\"]|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})",
+					"name": "constant.character.escape.ausar"
+				},
+				{
+					"match": "\\\\[^0-7xuUabfnrtv\\'\"]",
+					"name": "invalid.illegal.unknown-escape.ausar"
+				}
+			]
+		},
+		"string_placeholder": {
+			"patterns": [
+				{
+					"match": "%(\\[\\d+\\])?([\\+#\\-0\\x20]{,2}((\\d+|\\*)?(\\.?(\\d+|\\*|(\\[\\d+\\])\\*?)?(\\[\\d+\\])?)?))?[vT%tbcdoqxXUbeEfFgGsp]",
+					"name": "constant.other.placeholder.ausar"
+				}
+			]
 		}
-	},
-	"scopeName": "source.ausar"
+	}
 }
